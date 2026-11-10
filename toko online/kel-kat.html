@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelola Kategori - Toko Online</title>
+    <link href="./src/output.css" rel="stylesheet" />
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans overflow-x-hidden"
+  >
+    <header
+      class="bg-gray-300 flex flex-row justify-between items-center p-3 sm:p-4 border-b-2 border-gray-800 w-full sticky top-0 z-30"
+    >
+      <div class="flex items-center gap-2">
+        <button
+          id="menuToggle"
+          class="md:hidden text-black focus:outline-none p-1 border border-gray-800 rounded bg-gray-200"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+        <h2 class="text-base sm:text-xl font-bold text-black tracking-tight">
+          TOKO ONLINEKU
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3" id="headerAuthArea">
+        <span
+          class="text-black text-xs sm:text-sm font-semibold hover:underline truncate max-w-30 sm:max-w-none"
+        >
+          <a href="profil.html" id="userNameLink">Hai, Pengguna!</a>
+        </span>
+        <button
+          class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer"
+          onclick="Log()"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="flex flex-1 w-full relative">
+      <aside
+        id="sidebar"
+        class="fixed md:static inset-y-0 left-0 z-20 w-56 md:w-48 bg-white border-r-2 border-blue-900 flex flex-col justify-between py-4 shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out shadow-lg md:shadow-none top-14.25 md:top-0 h-[calc(100vh-57px)] md:h-auto"
+      >
+        <ul
+          class="text-center font-semibold text-black space-y-2 sm:space-y-4 uppercase tracking-wider text-xs sm:text-sm px-2 md:px-0"
+        >
+          <li>
+            <button
+              onclick="Dash()"
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+            >
+              Dashboard
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="Pro()"
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+            >
+              Products
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="Kat()"
+              class="py-2 w-full cursor-pointer bg-sky-300 border-2 border-blue-900 rounded md:rounded-none"
+            >
+              Kategori
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="Trans()"
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+            >
+              Transaksi
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="Lap()"
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+            >
+              Laporan
+            </button>
+          </li>
+          <li>
+            <button
+              onclick="Peng()"
+              class="hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+            >
+              Pengguna
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <div
+        id="sidebarOverlay"
+        class="fixed inset-0 bg-black/50 z-10 hidden md:hidden"
+      ></div>
+
+      <main class="flex-1 p-3 sm:p-6 md:p-8 w-full min-w-0">
+        <div class="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+          <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 sm:p-6 rounded-xl border border-slate-200 shadow-sm"
+          >
+            <div>
+              <h1 class="text-xl sm:text-2xl font-bold text-slate-900">
+                Kelola Kategori
+              </h1>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                Daftar kategori produk toko Anda.
+              </p>
+            </div>
+
+            <div
+              class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+            >
+              <div class="relative w-full sm:w-64">
+                <span
+                  class="absolute left-3 top-2.5 text-slate-400 text-xs sm:text-sm"
+                  >🔍</span
+                >
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search Kategori..."
+                  class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs sm:text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <button
+                id="btnOpenModal"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-sm cursor-pointer whitespace-nowrap text-center"
+              >
+                + Tambah Kategori
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+          >
+            <div class="overflow-x-auto">
+              <table
+                class="w-full text-left border-collapse text-xs sm:text-sm min-w-137.5"
+                id="kategoriTable"
+              >
+                <thead>
+                  <tr
+                    class="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-semibold uppercase tracking-wider text-tiny sm:text-xs"
+                  >
+                    <th class="py-3 px-4 sm:px-6 w-12 sm:w-16">NO</th>
+                    <th class="py-3 px-4 sm:px-6">Nama Kategori</th>
+                    <th class="py-3 px-4 sm:px-6">Deskripsi</th>
+                    <th class="py-3 px-4 sm:px-6">Jumlah</th>
+                    <th class="py-3 px-4 sm:px-6 text-center w-28 sm:w-32">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="tabelKategoriBody"
+                  class="divide-y divide-slate-200 bg-white"
+                ></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div
+      id="categoryModal"
+      class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4"
+    >
+      <div
+        class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden"
+      >
+        <div
+          class="px-5 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex justify-between items-center"
+        >
+          <h3
+            id="modalTitle"
+            class="text-base sm:text-lg font-bold text-slate-900"
+          >
+            Tambah Kategori
+          </h3>
+          <button
+            id="btnCloseModal"
+            type="button"
+            class="text-slate-400 hover:text-slate-600 text-xl font-bold cursor-pointer leading-none"
+          ></button>
+        </div>
+
+        <form id="categoryForm" class="p-5 sm:p-6 space-y-3 sm:space-y-4">
+          <input type="hidden" id="editIndex" value="-1" />
+
+          <div>
+            <label
+              for="namaKategori"
+              class="block text-xs font-semibold text-slate-700 uppercase mb-1"
+              >Nama Kategori</label
+            >
+            <input
+              type="text"
+              id="namaKategori"
+              required
+              placeholder="Masukkan nama kategori"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              for="deskripsiKategori"
+              class="block text-xs font-semibold text-slate-700 uppercase mb-1"
+              >Deskripsi</label
+            >
+            <textarea
+              id="deskripsiKategori"
+              rows="3"
+              placeholder="Masukkan deskripsi kategori"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="jumlahKategori"
+              class="block text-xs font-semibold text-slate-700 uppercase mb-1"
+              >Jumlah Item</label
+            >
+            <input
+              type="number"
+              id="jumlahKategori"
+              required
+              min="0"
+              placeholder="0"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div
+            class="flex justify-end gap-2 sm:gap-3 pt-4 border-t border-slate-100"
+          >
+            <button
+              type="button"
+              id="btnCancelModal"
+              class="px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-xs sm:text-sm font-medium hover:bg-slate-50 cursor-pointer"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              id="btnSubmitForm"
+              class="px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-medium cursor-pointer"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("-translate-x-full");
+        sidebarOverlay.classList.toggle("hidden");
+      }
+
+      menuToggle?.addEventListener("click", toggleSidebar);
+      sidebarOverlay?.addEventListener("click", toggleSidebar);
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentUserData = localStorage.getItem("currentUser");
+        const userNameLink = document.getElementById("userNameLink");
+
+        if (currentUserData) {
+          try {
+            const user = JSON.parse(currentUserData);
+            if (user && user.name) {
+              userNameLink.innerText = `Hai, ${user.name}!`;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        } else {
+          renderGuestHeader();
+        }
+      });
+
+      function renderGuestHeader() {
+        const headerAuthArea = document.getElementById("headerAuthArea");
+        if (headerAuthArea) {
+          headerAuthArea.innerHTML = `
+            <button onclick="window.location.href='login.html'" class="border border-gray-800 bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+              Masuk
+            </button>
+            <button onclick="window.location.href='index.html'" class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+              Daftar
+            </button>
+          `;
+        }
+      }
+
+      function Log() {
+        localStorage.removeItem("currentUser");
+        renderGuestHeader();
+      }
+
+      function Dash() {
+        window.location.href = "online.html";
+      }
+      function Pro() {
+        window.location.href = "produk.html";
+      }
+      function Kat() {
+        window.location.href = "kel-kat.html";
+      }
+      function Trans() {
+        window.location.href = "";
+      }
+      function Lap() {
+        window.location.href = "";
+      }
+      function Peng() {
+        window.location.href = "kel-peng.html";
+      }
+
+      let daftarKategori = JSON.parse(
+        localStorage.getItem("daftarKategori"),
+      ) || [
+        {
+          nama: "Aksesoris Laptop",
+          deskripsi:
+            "Peralatan pendukung laptop seperti mouse, cooling pad, dan adapter.",
+          jumlah: 500,
+        },
+        {
+          nama: "Laptop",
+          deskripsi: "Berbagai merk laptop kerja, gaming, dan ultrabook.",
+          jumlah: 500,
+        },
+      ];
+
+      function simpanKeStorage() {
+        localStorage.setItem("daftarKategori", JSON.stringify(daftarKategori));
+      }
+
+      const modal = document.getElementById("categoryModal");
+      const form = document.getElementById("categoryForm");
+      const modalTitle = document.getElementById("modalTitle");
+      const editIndexInput = document.getElementById("editIndex");
+      const btnSubmitForm = document.getElementById("btnSubmitForm");
+      const tabelBody = document.getElementById("tabelKategoriBody");
+      const searchInput = document.getElementById("searchInput");
+
+      function renderTabel(data = daftarKategori) {
+        tabelBody.innerHTML = "";
+
+        if (data.length === 0) {
+          tabelBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-6 text-center text-slate-400 italic">Tidak ada kategori ditemukan.</td>
+          </tr>
+        `;
+          return;
+        }
+
+        data.forEach((kat, index) => {
+          const realIndex = daftarKategori.indexOf(kat);
+          const rowHTML = `
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-3 sm:py-4 px-4 sm:px-6 text-slate-500">${index + 1}</td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 font-semibold text-slate-900">${kat.nama}</td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 text-slate-500 max-w-xs truncate" title="${kat.deskripsi}">${kat.deskripsi}</td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6">
+              <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium border border-slate-200">
+                ${kat.jumlah}
+              </span>
+            </td>
+            <td class="py-3 sm:py-4 px-4 sm:px-6 text-center space-x-1">
+              <button onclick="editKategori(${realIndex})" class="p-1.5 border border-slate-200 rounded-lg hover:bg-slate-100 text-slate-700" title="Edit">✎</button>
+              <button onclick="hapusKategori(${realIndex})" class="p-1.5 border border-red-200 text-red-500 rounded-lg hover:bg-red-50" title="Hapus">🗑</button>
+            </td>
+          </tr>
+        `;
+          tabelBody.insertAdjacentHTML("beforeend", rowHTML);
+        });
+      }
+
+      const toggleModal = (show) => {
+        modal.classList.toggle("hidden", !show);
+        modal.classList.toggle("flex", show);
+        if (!show) {
+          form.reset();
+          editIndexInput.value = "-1";
+        }
+      };
+
+      document.getElementById("btnOpenModal").onclick = () => {
+        modalTitle.innerText = "Tambah Kategori";
+        btnSubmitForm.innerText = "Simpan";
+        toggleModal(true);
+      };
+
+      document.getElementById("btnCloseModal").onclick = () =>
+        toggleModal(false);
+      document.getElementById("btnCancelModal").onclick = () =>
+        toggleModal(false);
+      modal.onclick = (e) => {
+        if (e.target === modal) toggleModal(false);
+      };
+
+      searchInput?.addEventListener("input", function (e) {
+        const query = e.target.value.toLowerCase();
+        const filtered = daftarKategori.filter(
+          (kat) =>
+            kat.nama.toLowerCase().includes(query) ||
+            kat.deskripsi.toLowerCase().includes(query),
+        );
+        renderTabel(filtered);
+      });
+
+      renderTabel();
+    </script>
+  </body>
+</html>

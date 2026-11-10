@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikum 1</title>
+</head>
+<body>
+    <h1> Menghitung nilai rata rata </h1>
+    <p id="p"> </p>
+
+
+    <script>
+    
+        let nilai1 , nilai2 , nr;
+        alert("selamat datang")
+        nilai1 = Number(prompt("masukan nilai 1"));
+         if(nilai1>100)
+        {
+        alert("error")
+        }
+        nilai2 = Number(prompt("masukan nilai 2"));
+         if(nilai2>100)
+        {
+        alert("error")
+        }
+        nr=(nilai1+nilai2)/2;
+
+        if(nr>100)  
+        {
+        alert("salah")
+        }
+        if(nr>=90&&nr<100)
+        {
+            alert("jika nilai rata rata kamu " +nr+ "artinya nilai kamu sangat baik")
+        }
+        else if(nr>=80&&nr<90)
+        {
+            alert("jika nilai rata rata kamu " +nr+ "artinya nilai kamu baik")
+        }
+        else if(nr>=70&&nr<80)
+        {
+            alert("jika nilai rata rata kamu " +nr+ "artinya nilai kamu cukup")
+        }
+        else if(nr<70)
+        {
+            alert("jika nilai rata rata kamu " +nr+ "artinya kamu kurang")
+        }
+        
+         document.getElementById("p").innerHTML="nilai 1 =" +nilai1+"<br>" + "nilai 2 ="
+          +nilai2+"<br>" + "rata rata = " +nr+"<br>" 
+          + "Keterangan = p" 
+        
+    
+    </script>
+    
+</body>
+</html>

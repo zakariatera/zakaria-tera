@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nilai</title>
+</head>
+<body>
+    <P id="ok"></P>
+    <script>
+        var Nilai = prompt("Masukkan Nilai");
+
+        while (Nilai === null ||Nilai.trim()  === "" ||isNaN(Nilai) || Number(Nilai) < 0 ||Number(Nilai) > 100 ) {
+            alert("Masukkan Nilai yang Valid") ;
+            Nilai = prompt("Masukkan Nilai");
+        }
+
+        Nilai = Number(Nilai);
+
+        if (Nilai >= 95) {
+            grade="A+";
+        }
+        else if (Nilai >= 90) {
+            grade="A";
+        }
+        else if (Nilai >= 85) {
+            grade="AB";
+        }
+        else if (Nilai >= 80) {
+            grade="B";
+        }
+        else if (Nilai >= 75) {
+            grade="BC";
+        }
+        else if (Nilai >= 70) {
+            grade="C";
+        }
+        else if (Nilai < 70) {
+            grade="D";
+        }
+        document.write("Nilai " + Nilai + "<br>"); 
+        document.write("grade " + grade);
+    </script>
+</body>
+</html>

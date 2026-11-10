@@ -1,0 +1,97 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    margin: 0;
+}
+
+.page {
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0,1);
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.page.active {
+    display: block;
+}
+
+h2 {
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+lable {
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+textarea,
+input[type="file"] {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #000000db;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: backround-color 0.3s ease;
+    
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#login-error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+#biodata-display {
+    text-align: left;
+    margin-top: 20px;
+}
+
+#display-foto {
+    width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+}
+button.logout {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: blue;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: backround-color 0.3s ease;
+}
+
+button.logout:hover {
+    background-color: rgb(0, 0, 113);
+}

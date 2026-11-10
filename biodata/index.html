@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Biodata Sederhana</title>
+    <link rel="stylesheet"href="style.css">
+</head>
+<body>
+    <div id="login-page" class="page active">
+        <h2>Halaman Login</h2>
+        <form id="login-form">
+            <label for="username"> Nama Pengguna:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Kata sandi:</label>
+            <input type="password" id="password" name="pasword" required>
+            <button type="sumbit">Masuk</button>
+        </form>
+        <p id="login-error-message" class="error"></p>
+    </div>
+
+    <div id="menu-page" class="page">
+
+        <h2> Halaman Menu</h2>
+        <p>Selamat datang, <span id="user-name"></span>!</p>
+        <button id="show-biodata-form-btn">Isi Biodata</button>
+        <button id="logout-btn" class="logout">Keluar</button>
+    </div>
+
+
+    <div id="biodata-form-page" class="page">
+        <h2>Formulir Biodata</h2>
+        <form id="biodata-form">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            <label for="nik">NIK:</label>
+            <input type="text" id="nik" name="nik" required>
+            <label for="alamat">Alamat:</label>
+            <textarea id="alamat" name="alamat" required></textarea>
+            <label for="foto">Foto:</label>
+            <input type="file" id="foto" name="foto" accept="image/*"required>
+            <button type="submit">Simpan</button>
+        </form>
+    </div>
+
+    <div id="display-biodata-page" class="page">
+        <h2>Biodata Anda</h2>
+        <div id="biodata-display">
+            <p><strong>Nama:</strong><span id="display-nama"></span></p>
+            <p><strong>NIK:</strong> <span id="display-nik"></span></p>
+            <p><strong>Alamat:</strong><span id="display-alamat"></span></p>
+            <p><strong>Foto:</strong></p>
+            <img id="display-foto" src="#" alt="Foto Pengguna">
+        </div>
+        <button id="back-to-menu-btn">Kembali ke Menu</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

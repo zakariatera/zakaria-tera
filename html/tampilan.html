@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Kasir OOP</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Container utama agar rapi di tengah */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+nav a {
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Styling Form & Konten */
+#konten {
+    text-align: center;
+    margin-top: 20px;
+}
+
+select, input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Agar padding tidak merusak lebar */
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.2s;
+    margin: 5px;
+}
+
+button:active { transform: scale(0.98); }
+
+/* Warna tombol spesifik */
+button[onclick*="prosesTransaksi"] { background: #27ae60; color: white; }
+button[onclick*="tampilkanRiwayat"] { background: #f1c40f; color: #333; }
+button[onclick*="hapusRiwayat"] { background: #e74c3c; color: white; }
+
+/* Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    background: white;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #34495e;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Struk & Riwayat */
+.struk {
+    background: #fff9c4;
+    padding: 20px;
+    border-left: 5px solid #f1c40f;
+    margin-top: 20px;
+    text-align: left;
+    border-radius: 4px;
+}
+
+#riwayat {
+    margin-top: 30px;
+}
+</style>
+</head>
+<body>
+
+<h2 >Kasir</h2>
+
+<nav>
+<a href="#" onclick="pilih('1')">Home</a>
+<a href="#" onclick="pilih('2')">Data Barang</a>
+<a href="#" onclick="pilih('3')">Penjualan</a>
+</nav>
+
+<div id="konten">
+<p>Selamat Datang</p>
+</div>
+
+<table id="tabelBarang" style="display:none;">
+<thead>
+<tr>
+<th>Nama</th>
+<th>Harga</th>
+<th>Size</th>
+<th>Stok</th>
+<th>Total Stok</th>
+</tr>
+</thead>
+<tbody id="isiTabel"></tbody>
+</table>
+
+<script>
+
+// ================= CLASS PRODUK =================
+class Produk{
+constructor(nama,harga,size,jumlah){
+    this.nm=nama;
+    this.hrg=harga;
+    this.sz=size;
+    this.jum=jumlah;
+}
+
+hitungTotal(){
+    return this.hrg * this.jum;
+}
+
+kurangiStok(qty){
+    if(this.jum>=qty){
+        this.jum -= qty;
+        return true;
+    }else{
+        alert("Stok "+this.nm+" tidak mencukupi");
+        return false;
+    }
+}
+
+buatBaris(){
+return `
+<tr>
+<td>${this.nm}</td>
+<td>Rp${this.hrg}</td>
+<td>${this.sz}</td>
+<td>${this.jum}</td>
+<td>Rp${this.hitungTotal()}</td>
+</tr>
+`;
+}
+}
+
+// ================= DATA =================
+let daftarBarang = [
+new Produk("Baju",65000,"L",60),
+new Produk("Celana",90000,"XL",75),
+new Produk("Topi",15000,"M",25),
+new Produk("Sepatu",50000,"42",35)
+];
+
+let daftarTransaksi = JSON.parse(localStorage.getItem("transaksi")) || [];
+
+// ================= MENU =================
+function pilih(menu){
+const konten=document.getElementById("konten");
+const tabel=document.getElementById("tabelBarang");
+
+if(menu==='1'){
+konten.innerHTML="<center><h3>youkoso</h3></center>";
+tabel.style.display="none";
+}
+else if(menu==='2'){
+konten.innerHTML="<h3>Data Barang</h3>";
+tampilkanData();
+}
+else if(menu==='3'){
+tabel.style.display="none";
+
+let opsi="";
+daftarBarang.forEach((item,index)=>{
+opsi+=`<option value="${index}">
+${item.nm} (Stok:${item.jum})
+</option>`;
+});
+
+konten.innerHTML=`
+<h3>Form Penjualan</h3>
+
+<label>Pilih Barang:</label><br>
+<select id="pilihBarang">${opsi}</select><br><br>
+
+<label>Jumlah:</label><br>
+<input type="number" id="jumlahBeli" min="1" value="1"><br><br>
+
+<button onclick="prosesTransaksi()">proses Bayar</button>
+<button onclick="tampilkanRiwayat()">Lihat Riwayat</button>
+<button onclick="hapusRiwayat()">Hapus Riwayat</button>
+
+<div id="struk" class="struk"></div>
+<div id="riwayat"></div>
+`;
+}
+}
+
+// ================= TAMPIL DATA =================
+function tampilkanData(){
+const tabel=document.getElementById("tabelBarang");
+const isi=document.getElementById("isiTabel");
+
+tabel.style.display="table";
+isi.innerHTML="";
+
+daftarBarang.forEach(item=>{
+isi.innerHTML+=item.buatBaris();
+});
+}
+
+// ================= TRANSAKSI =================
+function prosesTransaksi(){
+
+const index=document.getElementById("pilihBarang").value;
+const qty=parseInt(document.getElementById("jumlahBeli").value);
+const barang=daftarBarang[index];
+const struk=document.getElementById("struk");
+
+if(barang.kurangiStok(qty)){
+
+let total=barang.hrg*qty;
+let tanggal=new Date().toLocaleString();
+
+let data={
+nama:barang.nm,
+harga:barang.hrg,
+jumlah:qty,
+total:total,
+tanggal:tanggal
+};
+
+daftarTransaksi.push(data);
+
+localStorage.setItem("transaksi",JSON.stringify(daftarTransaksi));
+
+struk.innerHTML=`
+<h4>Struk Pembelian</h4>
+<p>Tanggal: ${tanggal}</p>
+<p>Barang: ${barang.nm}</p>
+<p>Jumlah: ${qty}</p>
+<p>Total: Rp${total}</p>
+<p>Sisa Stok: ${barang.jum}</p>
+`;
+
+pilih('3');
+}
+}
+
+// ================= RIWAYAT =================
+function tampilkanRiwayat(){
+
+const div=document.getElementById("riwayat");
+
+if(daftarTransaksi.length===0){
+div.innerHTML="<p>Belum ada transaksi</p>";
+return;
+}
+
+let totalSemua=0;
+
+let html=`
+<h3>Riwayat Penjualan</h3>
+<table>
+<tr>
+<th>Tanggal</th>
+<th>Barang</th>
+<th>Jumlah</th>
+<th>Total</th>
+</tr>
+`;
+
+daftarTransaksi.forEach(trx=>{
+totalSemua+=trx.total;
+html+=`
+<tr>
+<td>${trx.tanggal}</td>
+<td>${trx.nama}</td>
+<td>${trx.jumlah}</td>
+<td>Rp${trx.total}</td>
+</tr>
+`;
+});
+
+html+=`
+<tr>
+<th colspan="3">TOTAL SEMUA</th>
+<th>Rp${totalSemua}</th>
+</tr>
+</table>
+`;
+
+div.innerHTML=html;
+}
+
+// ================= HAPUS RIWAYAT =================
+function hapusRiwayat(){
+if(confirm("Yakin hapus semua riwayat?")){
+daftarTransaksi=[];
+localStorage.removeItem("transaksi");
+alert("Riwayat dihapus");
+pilih('3');
+}
+}
+
+</script>
+</body>
+</html>

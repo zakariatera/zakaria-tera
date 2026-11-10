@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./src/output.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <header class="bg-blue-600 flex flex-col items-center justify-center pt-6 pb-4">
+        <h2 class="text-3xl text-white font-extrabold">
+            GameStore
+        </h2>
+        <p class="text-white font-medium">
+            Menyediakan Game Dengan Harga Terjangkau
+        </p>
+    </header>
+
+    <nav class="bg-blue-800">
+        <ul class="flex items-center justify-center m-2">
+            <li><a href="#home" class="text-white mx-3 py-2 font-bold hover:text-blue-300">Home</a></li>
+            <li><a href="#produk" class="text-white mx-3 py-2 font-bold hover:text-blue-300">Produk</a></li>
+            <li><a href="#promo" class="text-white mx-3 py-2 font-bold hover:text-blue-300">Promo</a></li>
+            <li><a href="#tentang" class="text-white mx-3 py-2 font-bold hover:text-blue-300">Tentang</a></li>
+            <li><a href="#kontak" class="text-white mx-3 py-2 font-bold hover:text-blue-300">Kontak</a></li>
+        </ul>
+    </nav> 
+
+    <main class="flex-1 flex flex-col md:flex-row gap-6 p-4 items-start max-w-7xl mx-auto w-full">
+
+        <div class="flex-1 space-y-8 w-full min-w-0">
+
+            <section class="bg-white border p-4 border-gray-400 shadow-sm rounded">
+                <h2 class="font-bold text-2xl text-blue-600 py-2">Game Terbaru</h2>
+                <div class="flex flex-wrap gap-4 py-2 bg-white">
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/gta.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">Grand Theft Auto 5</p>
+                        <p class="mx-2 text-gray-800">Sebuah Game Yang Menjadikan Kita Sebagai Gang Yang Melakukan Kegiatan Kriminal</p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp300.000</p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>
+
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/fc.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">EA FC 26</p>
+                        <p class="mx-2 text-gray-800">Game Sepak Bola Dengan Gameplay Smooth Dan Sistem Gacha Yang Kapitalis</p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp564.000</p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>
+
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/eff.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">Efootball 2026</p>
+                        <p class="mx-2 text-gray-800">Game Sepak Bola Dengan Nuansa Gameplay Yang Realistis</p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp256.000</Rp256></p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>                    
+
+                </div>
+            </section>
+
+            <section class="bg-white border p-4 border-gray-400 shadow-sm rounded">
+                <h2 class="font-bold text-2xl text-red-600 py-2">Game Terlaris</h2>
+                <div class="flex flex-wrap gap-4 py-2 bg-white">
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/mc.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">Minecraft Java Edition</p>
+                        <p class="mx-2 text-gray-800">Game Sandbox 3D Yang Memungkinkan Player Membuat Dan Melakukan Hal </p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp320.000</p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>
+
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/res re.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">Resident Evil: Requiem</p>
+                        <p class="mx-2 text-gray-800">Gameplay Yang Menggabungkan Visual Horror Klasik Dan Inovasi Modern Untuk Memecahkan Sebuah Misteri</p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp960.000</p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>
+
+                    <article class="border border-none shadow shadow-gray-600 rounded mx-3 py-2 bg-white max-w-105">
+                        <img src="./foto/elden.jpg" alt="Barang 1" class="h-60 w-100 mx-2 rounded">
+                        <p class="mx-2 py-1 text-2xl font-bold">Elden Ring</p>
+                        <p class="mx-2 text-gray-800">Game Yang Menawarkan Dunia RPG Terbuka Dengan Perpaduan Gameplay Hack And Slash</p>
+                        <p class="mx-2 text-2xl py-1 text-blue-700 font-bold">Rp1.100.000</p>
+                        <div class="m-2">
+                            <button class="text-white bg-blue-500 rounded py-1 w-full hover:bg-blue-400">Beli</button>
+                        </div>
+                    </article>                    
+
+                </div>
+            </section>
+        </div>
+
+        <aside class="w-full md:w-64 bg-white shadow shadow-black rounded p-4 sticky top-4">
+            <div>
+                <h3 class="font-bold border-b pb-2 mb-2">Promo Terbaru</h3>
+            </div>
+            <div>
+                <ul class="list-disc pl-4 py-1 wrap-break-word">
+                    <li>Promo 10% Untuk Pengguna Baru</li>
+                    <li>Cashback Hingga 10.000</li>
+                    <li>Gratis Ongkir Seluruh Indonesia</li>
+                </ul>
+            </div>
+        </aside>
+
+    </main>
+
+    <footer class="bg-gray-900 text-center text-white flex flex-col mt-auto pt-4 pb-4">
+        <h1 class="font-bold">
+            GameStore
+        </h1>
+        <h1 class="font-medium">
+            Jl. Anggrek Wangi<br> 
+            Email : ambatukam@gmail.com<br>
+            WhatsApp : 0867-1435-8976
+        </h1>
+    </footer>
+</body>
+
+</html>

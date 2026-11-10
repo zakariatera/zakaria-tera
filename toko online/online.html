@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Online</title>
+   <link href="./src/output.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col font-sans text-gray-800 overflow-x-hidden">
+
+    <header class="bg-gray-300 flex flex-row justify-between items-center p-3 sm:p-4 border-b-2 border-gray-800 w-full sticky top-0 z-30">
+        <div class="flex items-center gap-2">
+            <button id="menuToggle" class="md:hidden text-black focus:outline-none p-1 border border-gray-800 rounded bg-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <h2 class="text-base sm:text-xl font-bold text-black tracking-tight">TOKO ONLINEKU</h2>
+        </div>
+        
+        <div class="flex items-center gap-2 sm:gap-3" id="headerAuthArea">
+            <span class="text-black text-xs sm:text-sm font-semibold hover:underline truncate max-w-30 sm:max-w-none">
+                <a href="profil.html" id="userNameLink">Hai, Pengguna!</a>
+            </span>
+            <button class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer" onclick="Log()">Logout</button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 w-full relative">
+
+        <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-20 w-56 md:w-48 bg-white border-r-2 border-blue-900 flex flex-col justify-between py-4 shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out shadow-lg md:shadow-none top-14.25 md:top-0 h-[calc(100vh-57px)] md:h-auto">
+            <ul class="text-center font-semibold text-black space-y-2 sm:space-y-4 uppercase tracking-wider text-xs sm:text-sm px-2 md:px-0">
+                <li>
+                    <button class="cursor-pointer py-2 w-full bg-sky-300 border-2 border-blue-900 rounded md:rounded-none" onclick="Dash()">Dashboard</button>
+                </li>
+                <li>
+                    <button class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none" onclick="Pro()">Products</button>
+                </li>
+                <li>
+                    <button class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none" onclick="Kat()">Kategori</button>
+                </li>
+                <li>
+                    <button class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none" onclick="Trans()">Transaksi</button>
+                </li>
+                <li>
+                    <button class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none" onclick="Lap()">Laporan</button>
+                </li>
+                <li>
+                    <button class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none" onclick="Peng()">Pengguna</button>
+                </li>
+            </ul>
+        </aside>
+
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-10 hidden md:hidden"></div>
+
+        <main class="flex-1 w-full min-w-0">
+            <div class="max-w-6xl mx-auto space-y-4 sm:space-y-6">
+
+                <header class="bg-sky-100 rounded-lg p-4 sm:p-6 shadow-md text-center space-y-3 sm:space-y-4">
+                    <section class="space-y-1 sm:space-y-2">
+                        <h1 class="font-bold text-2xl sm:text-4xl text-slate-900 font-poppins">
+                            MP Shop
+                        </h1>
+                        <p class="text-xs sm:text-base text-slate-600 font-sans">
+                            Pusat Gadget & Aksesori Terlengkap dan Terpercaya
+                        </p>
+                    </section>
+
+                    <nav class="w-full overflow-x-auto pt-2 pb-1 scrollbar-none">
+                        <ul class="flex justify-start sm:justify-center space-x-2 sm:space-x-4 font-medium text-xs sm:text-sm min-w-max px-2">
+                            <li>
+                                <a href="#" class="rounded-md px-3 sm:px-4 py-1.5 sm:py-2 bg-sky-700 text-white font-bold inline-block shadow">Home</a>
+                            </li>
+                            <li>
+                                <a href="#" class="rounded-md px-3 sm:px-4 py-1.5 sm:py-2 bg-sky-700 text-white font-bold inline-block shadow">Produk</a>
+                            </li>
+                            <li>
+                                <a href="#" class="rounded-md px-3 sm:px-4 py-1.5 sm:py-2 bg-sky-700 text-white font-bold inline-block shadow">Promo</a>
+                            </li>
+                            <li>
+                                <a href="#" class="rounded-md px-3 sm:px-4 py-1.5 sm:py-2 bg-sky-700 text-white font-bold inline-block shadow">Refurbish</a>
+                            </li>
+                            <li>
+                                <a href="#" class="rounded-md px-3 sm:px-4 py-1.5 sm:py-2 bg-sky-700 text-white font-bold inline-block shadow">Tentang Kami</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+
+                <div class="bg-white p-3 sm:p-4 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-xs sm:text-sm font-bold text-slate-900 border-b pb-2 mb-3">
+                        Kategori Produk
+                    </h2>
+                    <nav aria-label="Kategori Produk">
+                        <ul class="flex flex-wrap gap-1.5 sm:gap-2 text-xs">
+                            <li>
+                                <a href="#" class="bg-indigo-50 text-indigo-700 px-2.5 sm:px-3 py-1 rounded-full font-medium inline-block hover:bg-indigo-100 transition">Laptop</a>
+                            </li>
+                            <li>
+                                <a href="#" class="bg-indigo-50 text-indigo-700 px-2.5 sm:px-3 py-1 rounded-full font-medium inline-block hover:bg-indigo-100 transition">Aksesori PC</a>
+                            </li>
+                            <li>
+                                <a href="#" class="bg-indigo-50 text-indigo-700 px-2.5 sm:px-3 py-1 rounded-full font-medium inline-block hover:bg-indigo-100 transition">Audio</a>
+                            </li>
+                            <li>
+                                <a href="#" class="bg-indigo-50 text-indigo-700 px-2.5 sm:px-3 py-1 rounded-full font-medium inline-block hover:bg-indigo-100 transition">SmartPhone</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <section class="bg-white p-3 sm:p-6 rounded-lg shadow-md border border-slate-200 space-y-4" aria-label="Daftar Katalog Produk">
+                    <header class="flex items-center justify-between pb-2 border-b border-gray-200">
+                        <h2 id="terbaru-heading" class="text-sm sm:text-xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-2 sm:pl-3">
+                            Produk Terbaru & Populer
+                        </h2>
+                        <a href="#" class="text-xs sm:text-sm font-semibold text-indigo-600 hover:underline shrink-0 ml-2">
+                            Lihat Semua &rarr;
+                        </a>
+                    </header>
+
+                    <ul class="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                        
+                        <li class="flex h-full">
+                            <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between w-full hover:shadow-md transition-shadow">
+                                <figure class="relative">
+                                    <img src="../images/loq.png" alt="Laptop Lenovo LOQ" class="w-full h-32 sm:h-36 object-cover" />
+                                </figure>
+                                <section class="p-3 flex-1 flex flex-col justify-between">
+                                    <header>
+                                        <h3 class="font-bold text-slate-800 text-xs sm:text-sm">Laptop Lenovo LOQ</h3>
+                                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">Laptop Core Ultra 5 100hx Rtx 5050 RAM 16GB SSD 512GB.</p>
+                                    </header>
+                                    <footer class="mt-2 pt-2 border-t border-slate-100 flex flex-col justify-between space-y-2">
+                                        <p class="text-rose-500 font-extrabold text-xs sm:text-sm">Rp 16.500.000</p>
+                                        <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-2 rounded-lg text-xs transition-colors">Beli Sekarang</button>
+                                    </footer>
+                                </section>
+                            </article>
+                        </li>
+
+                        <li class="flex h-full">
+                            <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between w-full hover:shadow-md transition-shadow">
+                                <figure class="relative">
+                                    <img src="../images/vivobook.png" alt="Laptop Asus Vivobook" class="w-full h-32 sm:h-36 object-cover" />
+                                </figure>
+                                <section class="p-3 flex-1 flex flex-col justify-between">
+                                    <header>
+                                        <h3 class="font-bold text-slate-800 text-xs sm:text-sm">Laptop Asus Vivobook</h3>
+                                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">i5 13000hx Rtx 4060 Ram 12GB SSD 512GB</p>
+                                    </header>
+                                    <footer class="mt-2 pt-2 border-t border-slate-100 flex flex-col justify-between space-y-2">
+                                        <p class="text-rose-500 font-extrabold text-xs sm:text-sm">Rp 14.800.000</p>
+                                        <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-2 rounded-lg text-xs transition-colors">Beli Sekarang</button>
+                                    </footer>
+                                </section>
+                            </article>
+                        </li>
+
+                        <li class="flex h-full">
+                            <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between w-full hover:shadow-md transition-shadow relative">
+                                <figure class="relative">
+                                    <span class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow z-10">Diskon 11%</span>
+                                    <img src="../images/acer.png" alt="Acer Aspire Lite 14" class="w-full h-32 sm:h-36 object-cover" />
+                                </figure>
+                                <section class="p-3 flex-1 flex flex-col justify-between">
+                                    <header>
+                                        <h3 class="font-bold text-slate-800 text-xs sm:text-sm">Acer Aspire Lite 14</h3>
+                                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">i5 200h Ram 8GB SSD 512GB</p>
+                                    </header>
+                                    <footer class="mt-2 pt-2 border-t border-slate-100 flex flex-col justify-between space-y-2">
+                                        <div class="flex items-baseline justify-start gap-1.5 flex-wrap text-left">
+                                            <p class="text-rose-600 font-extrabold text-xs sm:text-sm">Rp 8.722.000</p>
+                                            <p class="text-tiny sm:text-xs text-slate-400 line-through">Rp 9.800.000</p>
+                                        </div>
+                                        <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-2 rounded-lg text-xs transition-colors">Ambil Promo</button>
+                                    </footer>
+                                </section>
+                            </article>
+                        </li>
+
+                        <li class="flex h-full">
+                            <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between w-full hover:shadow-md transition-shadow">
+                                <figure class="relative">
+                                    <img src="../images/tecno.png" alt="tecno handphone" class="w-full h-32 sm:h-36 object-cover" />
+                                </figure>
+                                <section class="p-3 flex-1 flex flex-col justify-between">
+                                    <header>
+                                        <h3 class="font-bold text-slate-800 text-xs sm:text-sm">Tacno camo phone</h3>
+                                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">Helio G99 Ram 8GB 256GB</p>
+                                    </header>
+                                    <footer class="mt-2 pt-2 border-t border-slate-100 flex flex-col justify-between space-y-2">
+                                        <p class="text-rose-500 font-extrabold text-xs sm:text-sm">Rp 4.700.000</p>
+                                        <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-2 rounded-lg text-xs transition-colors">Beli Sekarang</button>
+                                    </footer>
+                                </section>
+                            </article>
+                        </li>
+                    </ul>
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentUserData = localStorage.getItem('currentUser');
+            const userNameLink = document.getElementById('userNameLink');
+
+            if (currentUserData) {
+                try {
+                    const user = JSON.parse(currentUserData);
+                    if (user && user.name) {
+                        userNameLink.innerText = `Hai, ${user.name}!`;
+                    }
+                } catch(e) {
+                    console.error(e);
+                }
+            } else {
+                renderGuestHeader();
+            }
+        });
+
+        function renderGuestHeader() {
+            const headerAuthArea = document.getElementById("headerAuthArea");
+            if (headerAuthArea) {
+                headerAuthArea.innerHTML = `
+                    <button onclick="window.location.href='login.html'" class="border border-gray-800 bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+                        Masuk
+                    </button>
+                    <button onclick="window.location.href='index.html'" class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+                        Daftar
+                    </button>
+                `;
+            }
+        }
+
+        function Log() {
+            localStorage.removeItem('currentUser');
+            renderGuestHeader();
+        }
+        function Dash() {
+            window.location.href = "online.html";
+        }
+        function Pro() {
+            window.location.href = "produk.html";
+        }
+        function Kat() {
+            window.location.href = "kel-kat.html";
+        }
+        function Trans() {
+            window.location.href = "";
+        }
+        function Lap() {
+            window.location.href = "";
+        } 
+        function Peng() {
+            window.location.href = "kel-peng.html";
+        }
+    </script>
+</body>
+</html>

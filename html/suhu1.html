@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  <h1>konversi suhu</h1>
+  <p id="p"></p>
+  <script>
+    pilih=prompt("celcius,fahrenheith,kelvin, reamur")
+    switch (pilih)
+    {
+      case "1":
+        {
+        let c,f;
+        c=Number(prompt("masukan suhu celcius"));
+        f=(c*9/5)+32;
+      document.getElementById("p").innerHTML="nilai fahrenheit adalah"+f;
+      break;
+        }
+      case "2":
+        { 
+      let f,c;
+      f=Number(prompt("masukan suhu fahrenheit"));
+      c=(f-32)*5/9;
+      document.getElementById("p").innerHTML="nilai celcius adalah"+c;
+      break;
+        }
+      case "3": 
+      {
+        CkeR();
+      break;
+      }
+      case "4": 
+      {
+        let r=Number(prompt("masukan suhu reamur"));
+        RkeC(r);
+        break;
+      }
+      case "5": 
+      {
+        document.getElementById("p").innerHTML="terimakasih"
+      }
+      default: 
+      document.getElementById("p").innerHTML="pilih yang bener "
+    }
+
+    function CkeR() {
+      let c,r;
+      c=number(prompt("masukan suhu celsius"));
+      r=(4/5)*c;
+      document.getElementById("p").innerHTML="nilai reamur adalah"+ r;
+    }
+    function RkeC(r) {
+      let c=5/4*r;
+      document.getElementById("p").innerHTML="nilai celcius adalah"+c;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>javascript array dimensi </h2>
+
+    <p id="ok"></p>
+
+    <script>
+        let nama = ["joko Santoso", "adi jaya", "basuki", "randi gutama", "nurhadi", "sugiharto"];
+        let jumdata=nama.length
+        let carinama= prompt("masukan nama:");
+        for(let i=0;i<jumdata;i++)
+        {
+            if(carinama===nama[i])
+    
+        {
+            document.getElementById("ok").innerHTML = "data " + carinama + " ada";
+            break;
+        }
+
+       else 
+            document.getElementById("ok").innerHTML = "data " + carinama + " tidak ada";
+    }
+        
+    </script>
+</body>
+</html>

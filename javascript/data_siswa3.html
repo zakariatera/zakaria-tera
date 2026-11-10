@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Data Siswa</title>
+    
+    <!-- Google Fonts untuk tipografi yang lebih menarik -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS GLOBAL */
+        body {
+            font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins dari Google Fonts */
+            background-color: #f5f7fa; /* Latar belakang abu-abu muda yang lebih lembut */
+            color: #333; /* Warna teks abu-abu gelap untuk keterbacaan yang lebih baik */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HEADER */
+        h2 {
+            color: #2c3e50; /* Warna biru gelap untuk heading */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #3498db; /* Warna biru untuk sub-heading */
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        /* FORM CONTAINER */
+        .form-container {
+            background-color: #fff; /* Latar belakang putih untuk form */
+            border-radius: 8px; /* Sudut membulat untuk tampilan yang lebih modern */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus untuk memberikan kedalaman */
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        /* INPUT ELEMENTS */
+        input {
+            padding: 12px 15px;
+            border: 1px solid #ddd; /* Border abu-abu muda */
+            border-radius: 4px; /* Sudut membulat */
+            width: 200px;
+            margin-bottom: 10px;
+            transition: border-color 0.3s; /* Transisi halus untuk border */
+        }
+        
+        input:focus {
+            border-color: #3498db; /* Border biru saat fokus */
+            outline: none; /* Menghilangkan outline default */
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Bayangan biru saat fokus */
+        }
+        
+        /* BUTTONS */
+        button {
+            padding: 12px 20px;
+            background-color: #3498db; /* Warna biru untuk tombol utama */
+            color: white; /* Teks putih */
+            border: none; /* Menghilangkan border */
+            border-radius: 4px; /* Sudut membulat */
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s; /* Transisi untuk semua properti */
+            margin: 5px;
+        }
+        
+        button:hover {
+            background-color: #2980b9; /* Warna biru lebih gelap saat hover */
+            transform: translateY(-2px); /* Efek mengangkat saat hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan saat hover */
+        }
+        
+        button.secondary {
+            background-color: #95a5a6; /* Warna abu-abu untuk tombol sekunder */
+        }
+        
+        button.secondary:hover {
+            background-color: #7f8c8d; /* Warna abu-abu lebih gelap saat hover */
+        }
+        
+        button.danger {
+            background-color: #e74c3c; /* Warna merah untuk tombol hapus */
+        }
+        
+        button.danger:hover {
+            background-color: #c0392b; /* Warna merah lebih gelap saat hover */
+        }
+        
+        /* MESSAGE */
+        #msg {
+            color: #e74c3c; /* Warna merah untuk pesan error */
+            font-weight: 500;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #fadbd8; /* Latar belakang merah muda untuk pesan error */
+            display: none; /* Awalnya disembunyikan */
+        }
+        
+        #msg.success {
+            color: #27ae60; /* Warna hijau untuk pesan sukses */
+            background-color: #d5f4e6; /* Latar belakang hijau muda untuk pesan sukses */
+        }
+        
+        /* TABLE */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px auto;
+            background: #ffffff; /* Latar belakang putih untuk tabel */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+            border-radius: 8px; /* Sudut membulat */
+            overflow: hidden; /* Memastikan sudut membulat diterapkan dengan benar */
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee; /* Garis pemisah baris yang lebih halus */
+        }
+        
+        th {
+            background-color: #3498db; /* Warna biru untuk header tabel */
+            color: white; /* Teks putih untuk header */
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Warna latar belakang baris genap */
+        }
+        
+        tr:hover {
+            background-color: #f1f1f1; /* Warna latar belakang saat hover */
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-buttons button {
+            padding: 8px 12px;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000; /* Z-index tinggi untuk memastikan modal di atas */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* Latar belakang semi-transparan */
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* Posisi modal di tengah vertikal */
+            padding: 25px;
+            border: none;
+            border-radius: 8px; /* Sudut membulat */
+            width: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Bayangan yang lebih menonjol */
+            animation: modalopen 0.4s; /* Animasi saat modal dibuka */
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #333;
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            input {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .modal-content {
+                width: 80%;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Data Siswa</h2>
+
+        <!-- Form Pencarian Data Siswa -->
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" id="inputNISN" placeholder="Masukkan NISN">
+                <button onclick="cariNISN()">Cari</button>
+                <button onclick="lihatSemuaData()">Lihat Semua Data</button>
+                <button class="secondary" onclick="kembaliKePencarian()">Kembali</button>
+            </div>
+            <p id="msg"></p>
+        </div>
+
+        <!-- Tabel Hasil Pencarian -->
+        <table id="hasilTable">
+            <tr>
+                <th>Ranking</th>
+                <th>NISN</th>
+                <th>Nama</th>
+                <th>MTK</th>
+                <th>IPA</th>
+                <th>PAI</th>
+                <th>Rata-rata</th>
+                <th>Aksi</th>
+            </tr>
+        </table>
+
+        <!-- Form Tambah Data Siswa -->
+        <div class="form-container">
+            <h3>Tambah Data Siswa</h3>
+            <div class="form-group">
+                <input type="text" id="inputNISNBaru" placeholder="NISN">
+                <input type="text" id="inputNamaBaru" placeholder="Nama">
+            </div>
+            <div class="form-group">
+                <input type="number" id="inputMTKBaru" placeholder="Nilai MTK">
+                <input type="number" id="inputIPABaru" placeholder="Nilai IPA">
+                <input type="number" id="inputPAIBaru" placeholder="Nilai PAI">
+            </div>
+            <button onclick="tambahDataSiswa()">Tambah Data</button>
+        </div>
+    </div>
+
+    <!-- Modal Edit Data Siswa -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="tutupModalEdit()">&times;</span>
+            <h3>Edit Data Siswa</h3>
+            <div class="form-group">
+                <input type="text" id="editNISN" placeholder="NISN" readonly>
+                <input type="text" id="editNama" placeholder="Nama">
+            </div>
+            <div class="form-group">
+                <input type="number" id="editMTK" placeholder="Nilai MTK">
+                <input type="number" id="editIPA" placeholder="Nilai IPA">
+                <input type="number" id="editPAI" placeholder="Nilai PAI">
+            </div>
+            <button onclick="simpanEdit()">Simpan Perubahan</button>
+            <button class="secondary" onclick="tutupModalEdit()">Batal</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== VARIABEL GLOBAL =====
+        // Array untuk menyimpan data siswa
+        let datasiswa = [
+            {nisn: "001", nama: "Joko Santoso", mtk: 85, ipa: 78, pai: 92},
+            {nisn: "002", nama: "Adi Jaya", mtk: 90, ipa: 95, pai: 88},
+            {nisn: "003", nama: "Basuki", mtk: 85, ipa: 87, pai: 79},
+            {nisn: "004", nama: "Randi Gutama", mtk: 85, ipa: 88, pai: 92},
+            {nisn: "005", nama: "Nurhadi", mtk: 85, ipa: 90, pai: 79},
+            {nisn: "006", nama: "Sugiri", mtk: 85, ipa: 94, pai: 84},
+            {nisn: "007", nama: "momon", mtk: 78, ipa: 89, pai: 90},
+            {nisn: "008", nama: "bandek", mtk: 78, ipa: 89, pai: 90},
+            {nisn: "009", nama: "bambang", mtk: 78, ipa: 89, pai: 90},
+            {nisn: "010", nama: "karjo", mtk: 78, ipa: 89, pai: 90},
+            {nisn: "011", nama: "dapa", mtk: 78, ipa: 89, pai: 90},
+        ];
+
+        // Array untuk menyimpan hasil pencarian yang akan ditampilkan
+        let hasilDicari = [];
+        
+        // Variabel untuk menyimpan data siswa yang sedang diedit
+        let siswaSedangDiedit = null;
+
+        // ===== INISIALISASI DATA =====
+        // Menghitung rata-rata nilai untuk setiap siswa
+        datasiswa.forEach(s => {
+            s.rata = (s.mtk + s.ipa + s.pai) / 3;
+        });
+
+        // Fungsi untuk menghitung ranking berdasarkan nilai rata-rata
+        function hitungRanking() {
+            // Mengurutkan siswa berdasarkan nilai rata-rata (dari tertinggi ke terendah)
+            let sorted = [...datasiswa].sort((a, b) => b.rata - a.rata);
+            // Memberikan ranking berdasarkan urutan
+            sorted.forEach((s, i) => s.rank = i + 1);
+        }
+        
+        // Memanggil fungsi hitungRanking untuk menghitung ranking awal
+        hitungRanking();
+
+        // ===== FUNGSI TAMPILAN =====
+        // Fungsi untuk menampilkan hasil pencarian di tabel
+        function tampilkanHasil() {
+            const tabel = document.getElementById("hasilTable");
+
+            // Reset tabel tetapi biarkan header
+            tabel.innerHTML = `
+                <tr>
+                    <th>Ranking</th>
+                    <th>NISN</th>
+                    <th>Nama</th>
+                    <th>MTK</th>
+                    <th>IPA</th>
+                    <th>PAI</th>
+                    <th>Rata-rata</th>
+                    <th>Aksi</th>
+                </tr>
+            `;
+
+            // Menambahkan baris untuk setiap siswa dalam hasil pencarian
+            hasilDicari.forEach(siswa => {
+                tabel.innerHTML += `
+                    <tr>
+                        <td>${siswa.rank}</td>
+                        <td>${siswa.nisn}</td>
+                        <td>${siswa.nama}</td>
+                        <td>${siswa.mtk}</td>
+                        <td>${siswa.ipa}</td>
+                        <td>${siswa.pai}</td>
+                        <td>${siswa.rata.toFixed(2)}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button onclick="bukaModalEdit('${siswa.nisn}')">Edit</button>
+                                <button class="danger" onclick="hapusDataSiswa('${siswa.nisn}')">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+        
+        // Fungsi untuk menampilkan pesan
+        function tampilkanPesan(pesan, isSuccess = false) {
+            const msgElement = document.getElementById("msg");
+            msgElement.innerHTML = pesan;
+            msgElement.style.display = "block";
+            
+            if (isSuccess) {
+                msgElement.classList.add("success");
+            } else {
+                msgElement.classList.remove("success");
+            }
+            
+            // Menghilangkan pesan setelah 3 detik
+            setTimeout(() => {
+                msgElement.style.display = "none";
+            }, 3000);
+        }
+
+        // ===== FUNGSI CRUD (Create, Read, Update, Delete) =====
+        // Fungsi untuk mencari siswa berdasarkan NISN
+        function cariNISN() {
+            const nisnCari = document.getElementById("inputNISN").value.trim();
+
+            if (nisnCari === "") {
+                tampilkanPesan("Masukkan NISN dulu!");
+                return;
+            }
+
+            const siswa = datasiswa.find(s => s.nisn === nisnCari);
+
+            if (!siswa) {
+                tampilkanPesan("NISN tidak ditemukan!");
+                return;
+            }
+
+            // Reset hasilDicari dan tambahkan siswa yang dicari
+            hasilDicari = [siswa];
+            tampilkanHasil();
+        }
+        
+        // Fungsi untuk menampilkan semua data siswa
+        function lihatSemuaData() {
+            tampilkanPesan("Menampilkan semua data siswa", true);
+            
+            // Menampilkan semua data siswa
+            hasilDicari = [...datasiswa];
+            tampilkanHasil();
+        }
+        
+        // Fungsi untuk kembali ke tampilan pencarian awal
+        function kembaliKePencarian() {
+            // Mengosongkan hasil pencarian
+            hasilDicari = [];
+            tampilkanHasil();
+            
+            // Mengosongkan input NISN
+            document.getElementById("inputNISN").value = "";
+            
+            // Menyembunyikan pesan
+            document.getElementById("msg").style.display = "none";
+        }
+
+        // Fungsi untuk menambah data siswa baru
+        function tambahDataSiswa() {
+            const nisnBaru = document.getElementById("inputNISNBaru").value.trim();
+            const namaBaru = document.getElementById("inputNamaBaru").value.trim();
+            const mtkBaru = parseFloat(document.getElementById("inputMTKBaru").value);
+            const ipaBaru = parseFloat(document.getElementById("inputIPABaru").value);
+            const paiBaru = parseFloat(document.getElementById("inputPAIBaru").value);
+
+            if (nisnBaru === "" || namaBaru === "" || isNaN(mtkBaru) || isNaN(ipaBaru) || isNaN(paiBaru)) {
+                tampilkanPesan("Semua field harus diisi dengan benar!");
+                return;
+            }
+
+            // Cek apakah NISN sudah ada
+            if (datasiswa.some(s => s.nisn === nisnBaru)) {
+                tampilkanPesan("NISN sudah ada!");
+                return;
+            }
+
+            // Tambahkan data siswa baru
+            const siswaBaru = {
+                nisn: nisnBaru,
+                nama: namaBaru,
+                mtk: mtkBaru,
+                ipa: ipaBaru,
+                pai: paiBaru,
+                rata: (mtkBaru + ipaBaru + paiBaru) / 3
+            };
+
+            datasiswa.push(siswaBaru);
+            hitungRanking(); // Hitung ulang ranking setelah menambah data
+            tampilkanPesan("Data siswa berhasil ditambahkan!", true);
+            
+            // Kosongkan form
+            document.getElementById("inputNISNBaru").value = "";
+            document.getElementById("inputNamaBaru").value = "";
+            document.getElementById("inputMTKBaru").value = "";
+            document.getElementById("inputIPABaru").value = "";
+            document.getElementById("inputPAIBaru").value = "";
+            
+            // Tampilkan data yang baru ditambahkan
+            hasilDicari = [siswaBaru];
+            tampilkanHasil();
+        }
+
+        // Fungsi untuk menghapus data siswa
+        function hapusDataSiswa(nisn) {
+            if (confirm("Apakah Anda yakin ingin menghapus data siswa ini?")) {
+                // Hapus data dari array datasiswa
+                datasiswa = datasiswa.filter(s => s.nisn !== nisn);
+                
+                // Hapus dari hasilDicari jika ada
+                hasilDicari = hasilDicari.filter(s => s.nisn !== nisn);
+                
+                // Hitung ulang ranking
+                hitungRanking();
+                
+                // Tampilkan pesan sukses
+                tampilkanPesan("Data siswa berhasil dihapus!", true);
+                
+                // Tampilkan kembali tabel
+                tampilkanHasil();
+            }
+        }
+
+        // Fungsi untuk membuka modal edit
+        function bukaModalEdit(nisn) {
+            // Cari data siswa berdasarkan NISN
+            const siswa = datasiswa.find(s => s.nisn === nisn);
+            
+            if (siswa) {
+                // Simpan data siswa yang sedang diedit
+                siswaSedangDiedit = siswa;
+                
+                // Isi form modal dengan data siswa
+                document.getElementById("editNISN").value = siswa.nisn;
+                document.getElementById("editNama").value = siswa.nama;
+                document.getElementById("editMTK").value = siswa.mtk;
+                document.getElementById("editIPA").value = siswa.ipa;
+                document.getElementById("editPAI").value = siswa.pai;
+                
+                // Tampilkan modal
+                document.getElementById("editModal").style.display = "block";
+            }
+        }
+
+        // Fungsi untuk menutup modal edit
+        function tutupModalEdit() {
+            document.getElementById("editModal").style.display = "none";
+            siswaSedangDiedit = null;
+        }
+
+        // Fungsi untuk menyimpan perubahan data siswa
+        function simpanEdit() {
+            if (!siswaSedangDiedit) return;
+            
+            const namaBaru = document.getElementById("editNama").value.trim();
+            const mtkBaru = parseFloat(document.getElementById("editMTK").value);
+            const ipaBaru = parseFloat(document.getElementById("editIPA").value);
+            const paiBaru = parseFloat(document.getElementById("editPAI").value);
+            
+            if (namaBaru === "" || isNaN(mtkBaru) || isNaN(ipaBaru) || isNaN(paiBaru)) {
+                alert("Semua field harus diisi dengan benar!");
+                return;
+            }
+            
+            // Update data siswa
+            siswaSedangDiedit.nama = namaBaru;
+            siswaSedangDiedit.mtk = mtkBaru;
+            siswaSedangDiedit.ipa = ipaBaru;
+            siswaSedangDiedit.pai = paiBaru;
+            siswaSedangDiedit.rata = (mtkBaru + ipaBaru + paiBaru) / 3;
+            
+            // Hitung ulang ranking
+            hitungRanking();
+            
+            // Update tampilan
+            tampilkanHasil();
+            
+            // Tampilkan pesan sukses
+            tampilkanPesan("Data siswa berhasil diperbarui!", true);
+            
+            // Tutup modal
+            tutupModalEdit();
+        }
+    </script>
+</body>
+</html>

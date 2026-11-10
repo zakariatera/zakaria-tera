@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Daftar Barang</h2>
+
+    <script>
+        const Barang=[
+            {nama:"baju", harga:"20k", size:"L", jumlah:20},
+            {nama:"celana", harga:"15k", size:"L", jumlah:20},
+            {nama:"kaos kaki", harga:"15k", size:"L", jumlah:20},
+            {nama:"topi", harga:"10k", size:"L", jumlah:20},
+            {nama:"sepatu", harga:"13k", size:"L", jumlah:20},
+            {nama:"kemeja", harga:"18k", size:"L", jumlah:20},
+            {nama:"handphone", harga:"2jt", size:0, jumlah:20},
+            {nama:"laptop", harga:"5jt", size:"L", jumlah:20},
+            {nama:"monitor", harga:"6jt", size:"L", jumlah:20},
+            {nama:"pc", harga:"20jt", size:"L", jumlah:20},
+        ];
+
+        Barang.forEach(function(item)
+    {
+        document.write(item.nama+"  "+item.harga+"  "+item.size+"  "+item.jumlah+"<br>")
+    })
+    </script>
+    
+</body>
+</html>

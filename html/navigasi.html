@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Navigasi</h2>
+     <nav>
+        <a href="#" onclick="pilih('1')">Home</a>
+        <a href="#" onclick="pilih('2')">Data Barang</a>
+        <a href="#" onclick="pilih('3')">Penjualan</a>
+    </nav>
+</br>
+<div id="konten">
+    <p>Selamat Datang,Silahkan pilih menu</p>
+</div>
+
+    <table border="1" width="100%" id="tabelbarang" style="display:none;">
+        <thead>
+            <tr>
+            <th width="40%">Nama Barang</th>
+            <th width="20%">Harga Barang</th>
+            <th width="20%">size Barang</th>
+            <th width="20%">Jumlah Barang</th>
+            </tr>
+            </thead>
+            <tbody id="tabel">
+            </tbody>
+              <script>
+        const Barang=[
+            {nama:"baju", harga:40000, size:"L", jumlah:20},
+            {nama:"celana", harga:30000, size:"L", jumlah:20},
+            {nama:"kaos kaki", harga:10000, size:"L", jumlah:20},
+            {nama:"topi", harga:15000, size:"L", jumlah:20},
+            {nama:"sepatu", harga:100000, size:"L", jumlah:20},
+            {nama:"kemeja", harga:70000, size:"L", jumlah:20},
+            {nama:"handphone", harga:2000000, size:0, jumlah:20},
+            {nama:"laptop", harga:5000000, size:"L", jumlah:20},
+            {nama:"monitor", harga:6000000, size:0, jumlah:20},
+            {nama:"pc", harga:20000000, size:0, jumlah:20}
+        ];
+
+        Barang.forEach(function(item)
+    {
+        document.write("<tr>");
+        document.write("<td>" + item.nama + "</td>");
+        document.write("<td>" + item.harga + "</td>");
+        document.write("<td>" + item.size + "</td>");
+        document.write("<td>" + item.jumlah + "</td>");
+        document.write("</tr>");
+    })
+
+    </script>
+    </table>
+
+<script>
+    
+    function pilih(menu) {
+        const konten = document.getElementById("konten");
+        const tabel = document.getElementById("tabelbarang");
+
+        if (menu === '1') {
+            konten.innerHTML = "<p>Selamat datang di Home!</p>"
+            tabel.style.display = "none";
+        } else if (menu === '2') {
+            konten.innerHTML = "<p>Menampilkan Data Barang</p>"
+            tabel.style.display="table";
+        } else if (menu === '3') {
+            konten.innerHTML = "<p>Halaman Penjualan Sedang dalam pengembangan</p>"
+            tabel.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

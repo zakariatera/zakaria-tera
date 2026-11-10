@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Table Daftar Barang</h2>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+            <th width="40%">Nama Barang</th>
+            <th width="20%">Harga Barang</th>
+            <th width="20%">size Barang</th>
+            <th width="20%">Jumlah Barang</th>
+            </tr>
+        </thead>
+        <script>
+        const Barang=[
+            {nama:"baju", harga:40000, size:"L", jumlah:20},
+            {nama:"celana", harga:30000, size:"L", jumlah:20},
+            {nama:"kaos kaki", harga:10000, size:"L", jumlah:20},
+            {nama:"topi", harga:15000, size:"L", jumlah:20},
+            {nama:"sepatu", harga:100000, size:"L", jumlah:20},
+            {nama:"kemeja", harga:70000, size:"L", jumlah:20},
+            {nama:"handphone", harga:2000000, size:0, jumlah:20},
+            {nama:"laptop", harga:5000000, size:"L", jumlah:20},
+            {nama:"monitor", harga:6000000, size:0, jumlah:20},
+            {nama:"pc", harga:20000000, size:0, jumlah:20}
+        ];
+
+        Barang.forEach(function(item)
+    {
+        document.write("<tr>");
+        document.write("<td>" + item.nama + "</td>");
+        document.write("<td>" + item.harga + "</td>");
+        document.write("<td>" + item.size + "</td>");
+        document.write("<td>" + item.jumlah + "</td>");
+        document.write("</tr>");
+    })
+    </script>
+    </table>
+
+    
+</body>
+</html>

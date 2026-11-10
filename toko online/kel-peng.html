@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelola Pengguna - Toko Online</title>
+    <link href="./src/output.css" rel="stylesheet" />
+  </head>
+  <body
+    class="bg-gray-100 min-h-screen flex flex-col font-sans text-gray-800 overflow-x-hidden"
+  >
+    <header
+      class="bg-gray-300 flex flex-row justify-between items-center p-3 sm:p-4 border-b-2 border-gray-800 w-full sticky top-0 z-30"
+    >
+      <div class="flex items-center gap-2">
+        <button
+          id="menuToggle"
+          class="md:hidden text-black focus:outline-none p-1 border border-gray-800 rounded bg-gray-200"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+        <h2 class="text-base sm:text-xl font-bold text-black tracking-tight">
+          TOKO ONLINEKU
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3" id="headerAuthArea">
+        <span
+          class="text-black text-xs sm:text-sm font-semibold hover:underline truncate max-w-30 sm:max-w-none"
+        >
+          <a href="profil.html" id="userNameLink">Hai, Pengguna!</a>
+        </span>
+        <button
+          class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer"
+          onclick="Log()"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="flex flex-1 w-full relative">
+      <aside
+        id="sidebar"
+        class="fixed md:static inset-y-0 left-0 z-20 w-56 md:w-48 bg-white border-r-2 border-blue-900 flex flex-col justify-between py-4 shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out shadow-lg md:shadow-none top-14.25 md:top-0 h-[calc(100vh-57px)] md:h-auto"
+      >
+        <ul
+          class="text-center font-semibold text-black space-y-2 sm:space-y-4 uppercase tracking-wider text-xs sm:text-sm px-2 md:px-0"
+        >
+          <li>
+            <button
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+              onclick="Dash()"
+            >
+              Dashboard
+            </button>
+          </li>
+          <li>
+            <button
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+              onclick="Pro()"
+            >
+              Products
+            </button>
+          </li>
+          <li>
+            <button
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+              onclick="Kat()"
+            >
+              Kategori
+            </button>
+          </li>
+          <li>
+            <button
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+              onclick="Trans()"
+            >
+              Transaksi
+            </button>
+          </li>
+          <li>
+            <button
+              class="cursor-pointer hover:bg-gray-100 py-2 w-full rounded md:rounded-none"
+              onclick="Lap()"
+            >
+              Laporan
+            </button>
+          </li>
+          <li>
+            <button
+              class="cursor-pointer py-2 w-full bg-sky-300 border-2 border-blue-900 rounded md:rounded-none"
+              onclick="Peng()"
+            >
+              Pengguna
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <div
+        id="sidebarOverlay"
+        class="fixed inset-0 bg-black/50 z-10 hidden md:hidden"
+      ></div>
+
+      <main class="flex-1 p-3 sm:p-6 md:p-8 w-full min-w-0">
+        <div
+          class="max-w-5xl mx-auto bg-white p-4 sm:p-6 rounded-lg shadow-md border border-gray-200"
+        >
+          <div
+            class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 pb-4 border-b border-gray-200"
+          >
+            <div>
+              <h1 class="text-xl sm:text-2xl font-bold text-gray-800">
+                Kelola Pengguna
+              </h1>
+              <p class="text-xs sm:text-sm text-gray-500 mt-1">
+                Manajemen akun admin dan pembeli
+              </p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="w-full text-left border-collapse min-w-125">
+              <thead>
+                <tr
+                  class="bg-gray-50 border-b border-gray-200 text-gray-600 text-tiny sm:text-xs font-semibold uppercase tracking-wider"
+                >
+                  <th class="py-3 px-3 sm:px-4 w-12">No</th>
+                  <th class="py-3 px-3 sm:px-4">Nama</th>
+                  <th class="py-3 px-3 sm:px-4">Email</th>
+                  <th class="py-3 px-3 sm:px-4">Role</th>
+                  <th class="py-3 px-3 sm:px-4 text-center w-32">Aksi</th>
+                </tr>
+              </thead>
+              <tbody
+                id="userTableBody"
+                class="divide-y divide-gray-200 text-xs sm:text-sm bg-white"
+              ></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("-translate-x-full");
+        sidebarOverlay.classList.toggle("hidden");
+      }
+
+      menuToggle?.addEventListener("click", toggleSidebar);
+      sidebarOverlay?.addEventListener("click", toggleSidebar);
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentUserData = localStorage.getItem("currentUser");
+        const userNameLink = document.getElementById("userNameLink");
+
+        if (currentUserData) {
+          try {
+            const user = JSON.parse(currentUserData);
+            if (user && user.name) {
+              userNameLink.innerText = `Hai, ${user.name}!`;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        } else {
+          renderGuestHeader();
+        }
+      });
+
+      function renderGuestHeader() {
+        const headerAuthArea = document.getElementById("headerAuthArea");
+        if (headerAuthArea) {
+          headerAuthArea.innerHTML = `
+            <button onclick="window.location.href='login.html'" class="border border-gray-800 bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+              Masuk
+            </button>
+            <button onclick="window.location.href='index.html'" class="border border-gray-800 bg-gray-200 hover:bg-gray-300 text-black px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold shadow rounded-sm cursor-pointer">
+              Daftar
+            </button>
+          `;
+        }
+      }
+
+      function Log() {
+        localStorage.removeItem("currentUser");
+        renderGuestHeader();
+      }
+      function Dash() {
+        window.location.href = "online.html";
+      }
+      function Pro() {
+        window.location.href = "produk.html";
+      }
+      function Kat() {
+        window.location.href = "kel-kat.html";
+      }
+      function Trans() {
+        window.location.href = "";
+      }
+      function Lap() {
+        window.location.href = "";
+      }
+      function Peng() {
+        window.location.href = "kel-peng.html";
+      }
+
+      let users = [
+        { nama: "Ahmad Rizky", email: "ahmad@example.com", role: "Admin" },
+        { nama: "Siti Rahma", email: "siti@example.com", role: "Pembeli" },
+        { nama: "Budi Santoso", email: "budi@example.com", role: "Pembeli" },
+      ];
+
+      function renderTable() {
+        const tableBody = document.getElementById("userTableBody");
+        if (!tableBody) return;
+        tableBody.innerHTML = "";
+
+        users.forEach((user, index) => {
+          const roleBadgeClass =
+            user.role === "Admin"
+              ? "bg-purple-100 text-purple-700 border-purple-200"
+              : "bg-green-100 text-green-700 border-green-200";
+
+          const row = `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="py-3 px-3 sm:px-4 text-gray-500">${index + 1}</td>
+                        <td class="py-3 px-3 sm:px-4 font-medium text-gray-800">${user.nama}</td>
+                        <td class="py-3 px-3 sm:px-4 text-gray-600">${user.email}</td>
+                        <td class="py-3 px-3 sm:px-4">
+                            <span class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-medium border ${roleBadgeClass}">
+                                ${user.role}
+                            </span>
+                        </td>
+                        <td class="py-3 px-3 sm:px-4 text-center whitespace-nowrap">
+                            <button onclick="openEditModal(${index})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded text-xs font-medium mr-1 transition cursor-pointer">
+                                Edit
+                            </button>
+                            <button onclick="deleteUser(${index})" class="bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer">
+                                Hapus
+                            </button>
+                        </td>
+                    </tr>
+                `;
+          tableBody.insertAdjacentHTML("beforeend", row);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", renderTable);
+    </script>
+  </body>
+</html>

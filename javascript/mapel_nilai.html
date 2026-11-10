@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px  auto;
+        }
+        th,td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th{
+            background-color: #add;
+        }
+    </style>
+
+</head>
+<body>
+    <h2 style="text-align: center;">data siswa</h2>
+    <p id="ok"></p>
+    <table id="table datasiswa"></table>
+    <tr>
+        <th>Nama</th>
+        <th>mtk</th>
+        <th>ipa</th>
+        <th>pai</th>
+        <th>rata-rata</th>
+    </tr>
+    <script>
+        let  datasiswa = [
+            {nama: "Joko Santoso",  mtk : 85, ipa: 100, pai: 100},
+            {nama: "Adi Jaya",mtk : 85, ipa: 100, pai: 100 },
+            {nama: "Basuki", mtk : 85, ipa:12, pai: 19},
+            {nama: "Randi Gutama",mtk : 85, ipa: 100, pai: 100 },
+            {nama: "Nurhadi",  mtk :85, ipa: 100, pai: 100},
+            {nama: "Sugiri", mtk : 85, ipa: 100, pai: 100},
+    ];
+     
+        
+        let rata=prompt("masukan nama")
+        for(i=0;i<6;i++)
+        if(rata.toLocaleLowerCase()===datasiswa[i].nama.toLocaleLowerCase())
+        {
+            let rata1=(datasiswa[i].mtk+datasiswa[i].ipa+datasiswa[i].pai)/3;
+
+            document.getElementById("ok").innerHTML="nama :"+datasiswa[i].nama + "<br> nilai mtk :"+datasiswa[i].mtk+ 
+            "<br> nilai ipa :"+datasiswa[i].ipa+ "<br> nilai pai :"+datasiswa[i].pai+ "<br> rata rata :" +rata1.toFixed(2)
+            break;
+        }
+    else
+
+         document.getElementById("ok").innerHTML="data anda salah"
+
+        
+         
+            
+    </script>
+
+    
+    
+   
+</body>
+</html>

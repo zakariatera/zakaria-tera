@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Latihan Switch case</h1>
+    <p id="ok"></p>
+
+    <script>
+        alert("irassaimase")
+        let pilih;
+        pilih=prompt("pilih = 1, Luas segitiga, 2, Luas Bujurn Sangkar, 3, Luas lingkaran")
+        //pilih=number(pilih);
+        switch (pilih)
+        {
+            case "1":
+        {
+            let alas,tinggi,luas;
+            alas=10;;
+            tinggi=5;
+            luas=0,5*alas*tinggi;
+            document.getElementById("ok").innerHTML="Luas Segitiga =" +luas;
+        break;
+        }
+        case "2":
+        {
+            let panjang,lebar,luas;
+            panjang=10;
+            lebar=5;
+            luas=panjang*lebar;
+            document.getElementById("ok").innerHTML="Luas Persegi Panjang =" +luas;
+            break;
+        }
+        case "3":
+        {
+            let r,phi,luas
+            phi=22/7
+            r=10;
+            luas=phi*r*r;
+            document.getElementById("ok").innerHTML= " Luas Lingkaran =" +luas
+        break;
+        }
+        default:
+            document.getElementById("ok").innerHTML=" Pilihan anda salah";
+        }
+    </script>
+    
+</body>
+</html>

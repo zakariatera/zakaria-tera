@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Navigasi</h2>
+     <nav>
+        <a href="#" onclick="pilih('1')">Home</a>
+        <a href="#" onclick="pilih('2')">Data Barang</a>
+        <a href="#" onclick="pilih('3')">Penjualan</a>
+    </nav>
+</br>
+<div id="konten">
+    <p>Selamat Datang,Silahkan pilih menu</p>
+</div>
+
+    <table border="1" width="100%" id="tabelbarang" style="display:none;">
+        <thead>
+            <tr>
+            <th width="30%">Nama Barang</th>
+            <th width="20%">Harga Barang</th>
+            <th width="20%">size Barang</th>
+            <th width="20%">Jumlah Barang</th>
+            <th width="10%">Total Barang</th>
+            </tr>
+            </thead>
+            <tbody id="isiTabel">
+            </tbody>
+             </table>
+              <script>
+                function Produk(nama, harga, size, jumlah) {
+                    this.nm= nama;
+                    this.hrg= harga;
+                    this.sz= size;
+                    this.jum= jumlah;
+
+                    this.hitungTotal =  ()  => this.hrg * this.jum;
+                    
+
+                    this.buatBaris = () => 
+                         `<tr> 
+                            <td>${this.nm}</td>
+                            <td>${this.hrg}</td>
+                            <td>${this.sz}</td>
+                            <td>${this.jum}</td>
+                            <td>${this.hitungTotal()}</td>
+                            </tr>`;
+                        
+                    };
+                
+        const daftarBarang=[
+            new Produk("baju kemeja", 65000,"L", 60),
+            new Produk("celana", 90000, "XL", 75),
+            new Produk("kaos kaki", 10000, "M", 20),
+            new Produk("topi", 15000, "M", 25),
+            new Produk("sepatu", 50000, "S", 35)
+        ];
+        // method
+        function tampilkanData() {
+            const tabel = document.getElementById("tabelbarang");
+            const isi = document.getElementById("isiTabel");
+
+            tabel.style.display = "table";
+            isi.innerHTML = "";
+                        // method
+            daftarBarang.forEach((item) => {
+                isi.innerHTML += item.buatBaris();
+            });
+        }
+    
+    function pilih(menu) {
+                    // method
+        const konten = document.getElementById("konten");
+        const tabel = document.getElementById("tabelbarang");
+
+        if (menu === '1') {
+            konten.innerHTML = "<p>Selamat datang di Home!</p>"
+            tabel.style.display = "none";
+        } else if (menu === '2') {
+            konten.innerHTML = "<p>Menampilkan Data Barang</p>"
+            tampilkanData();
+        } else if (menu === '3') {
+            konten.innerHTML = "<p>Halaman Penjualan</p>"
+            tabel.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

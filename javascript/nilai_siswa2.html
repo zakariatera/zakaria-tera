@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <p id="ok"></p>
+    <script>
+        let  datasiswa = [
+            {nama: "Joko Santoso", nilai: "85"},
+            {nama: "Adi Jaya", nilai: "92"},
+            {nama: "Basuki", nilai: "78"},
+            {nama: "Randi Gutama", nilai: "90"},
+            {nama: "Nurhadi", nilai: "65"},
+            {nama: "Sugiri", nilai: "100"},
+    ];
+
+    let carinil=prompt('masukan nama')
+    for (let i=0;i<datasiswa.length;i++)
+    if ( carinil.toLocaleLowerCase()===datasiswa[i].nama.toLocaleLowerCase())
+    {
+    document.getElementById("ok").innerHTML="nama :" + datasiswa[i].nama + " nilai :" + datasiswa[i].nilai
+    break;
+    }
+
+    else
+     document.getElementById("ok").innerHTML="data" +carinil+ " tidak di ketahui"
+
+
+    </script>
+</body>
+</html>

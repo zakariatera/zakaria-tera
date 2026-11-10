@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cari Data Siswa</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+h3 {
+  color: #3498db;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+.form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+input {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+input:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+button {
+  padding: 12px 20px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin: 5px;
+}
+button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+button.secondary {
+  background: #95a5a6;
+}
+button.secondary:hover {
+  background: #7f8c8d;
+}
+button.danger {
+  background: #e74c3c;
+}
+button.danger:hover {
+  background: #c0392b;
+}
+#msg {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  display: none;
+}
+#msg {
+  background-color: #fadbd8;
+  color: #e74c3c;
+}
+#msg.success {
+  background-color: #d5f4e6;
+  color: #27ae60;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+th {
+  background-color: #3498db;
+  color: #fff;
+  font-weight: 600;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+tr:hover {
+  background: #f1f1f1;
+}
+.action-buttons {
+  display: flex;
+  gap: 5px;
+}
+.highlight {
+  background-color: yellow !important;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Data Siswa</h2>
+<div class="form-container">
+  <div class="form-group">
+    <input type="text" id="inputNISN" placeholder="Masukkan NISN" />
+    <button onclick="cariNISN()">Cari</button>
+    <button onclick="lihatSemuaData()">Lihat Semua Data</button>
+    <button id="kembaliBtn" class="secondary" onclick="kembaliKePencarian()">Kembali</button>
+  </div>
+  <p id="msg"></p>
+</div>
+<table id="hasilTable">
+<tr>
+  <th>Ranking</th><th>NISN</th><th>Nama</th><th>MTK</th><th>IPA</th><th>PAI</th><th>Rata-rata</th><th>Aksi</th>
+</tr>
+</table>
+<div class="form-container">
+<h3>Tambah Data Siswa</h3>
+<div class="form-group">
+<input type="text" id="inputNISNBaru" placeholder="NISN" />
+<input type="text" id="inputNamaBaru" placeholder="Nama" />
+</div>
+<div class="form-group">
+<input type="number" id="inputMTKBaru" placeholder="Nilai MTK" />
+<input type="number" id="inputIPABaru" placeholder="Nilai IPA" />
+<input type="number" id="inputPAIBaru" placeholder="Nilai PAI" />
+</div>
+<button onclick="tambahDataSiswa()">Tambah Data</button>
+</div>
+</div>
+
+<script>
+let datasiswa = JSON.parse(localStorage.getItem('datasiswa')) || [
+  {nisn:"001", nama:"Joko Santoso", mtk:85, ipa:78, pai:92},
+  {nisn:"002", nama:"Adi Jaya", mtk:90, ipa:95, pai:88},
+  {nisn:"003", nama:"Basuki", mtk:85, ipa:87, pai:79},
+  {nisn:"004", nama:"Randi Gutama", mtk:85, ipa:88, pai:92},
+  {nisn:"005", nama:"Nurhadi", mtk:85, ipa:90, pai:79},
+  {nisn:"006", nama:"Sugiri", mtk:85, ipa:94, pai:84},
+  {nisn:"007", nama:"momon", mtk:78, ipa:89, pai:90},
+  {nisn:"008", nama:"bandek", mtk:78, ipa:89, pai:90},
+  {nisn:"009", nama:"bambang", mtk:78, ipa:89, pai:90},
+  {nisn:"010", nama:"karjo", mtk:78, ipa:89, pai:90},
+  {nisn:"011", nama:"dapa", mtk:78, ipa:89, pai:90},
+];
+let hasilDicari=[]
+let siswaSedangDiedit=null
+let editingNisn = null
+// Hitung rata-rata dan ranking
+datasiswa.forEach(s => { s.rata = (s.mtk + s.ipa + s.pai) / 3; });
+function hitungRanking() {
+  let sorted = [...datasiswa].sort((a,b)=>b.rata - a.rata);
+  sorted.forEach((s,i)=>s.rank=i+1);
+}
+hitungRanking();
+
+function saveData() {
+  localStorage.setItem('datasiswa', JSON.stringify(datasiswa));
+}
+
+function tampilkanHasil(highlightNisn = null) {
+  const tabel = document.getElementById("hasilTable");
+  tabel.innerHTML = `
+    <tr>
+      <th>Ranking</th><th>NISN</th><th>Nama</th><th>MTK</th><th>IPA</th><th>PAI</th><th>Rata-rata</th><th>Aksi</th>
+    </tr>`;
+  hasilDicari.forEach(siswa => {
+    const isHighlighted = siswa.nisn === highlightNisn;
+    const isEditing = siswa.nisn === editingNisn;
+    tabel.innerHTML += `
+      <tr${isHighlighted ? ' class="highlight"' : ''}>
+        <td>${siswa.rank}</td>
+        <td>${siswa.nisn}</td>
+        <td>${isEditing ? `<input type="text" id="editNama" value="${siswa.nama}" />` : siswa.nama}</td>
+        <td>${isEditing ? `<input type="number" id="editMtk" value="${siswa.mtk}" />` : siswa.mtk}</td>
+        <td>${isEditing ? `<input type="number" id="editIpa" value="${siswa.ipa}" />` : siswa.ipa}</td>
+        <td>${isEditing ? `<input type="number" id="editPai" value="${siswa.pai}" />` : siswa.pai}</td>
+        <td>${siswa.rata.toFixed(2)}</td>
+        <td>
+          <div class="action-buttons">
+            ${isEditing ? `
+              <button onclick="simpanEditInline('${siswa.nisn}')">Simpan</button>
+              <button onclick="batalEdit()">Batal</button>
+            ` : `
+              <button onclick="editInline('${siswa.nisn}')">Edit</button>
+              <button class="danger" onclick="hapusDataSiswa('${siswa.nisn}')">Hapus</button>
+            `}
+          </div>
+        </td>
+      </tr>`;
+  });
+}
+
+function tampilkanPesan(pesan, isSuccess=false) {
+  const msg=document.getElementById("msg");
+  msg.innerHTML=pesan;
+  msg.style.display="block";
+  msg.className=isSuccess?"success":"";
+  setTimeout(()=>{msg.style.display="none";},3000);
+}
+
+document.getElementById("kembaliBtn").style.display = "none";
+
+// Saat klik cari, tampilkan tombol Kembali
+function cariNISN() {
+  const nisn=document.getElementById("inputNISN").value.trim();
+  if(nisn===""){tampilkanPesan("Masukkan NISN dulu!");return;}
+  const siswa=datasiswa.find(s=>s.nisn===nisn);
+  if(!siswa){tampilkanPesan("NISN tidak ditemukan!");return;}
+  hasilDicari=[siswa]; 
+  tampilkanHasil();
+  // Tampilkan tombol kembali
+  document.getElementById("kembaliBtn").style.display = "inline-block";
+}
+
+function lihatSemuaData() {
+  hasilDicari=[...datasiswa]; tampilkanPesan("Menampilkan semua data siswa",true); tampilkanHasil();
+  document.getElementById("kembaliBtn").style.display = "inline-block";
+}
+
+
+// Saat klik kembali, sembunyikan tombol
+function kembaliKePencarian() {
+  hasilDicari=[];
+  tampilkanHasil();
+  document.getElementById("inputNISN").value="";
+  document.getElementById("msg").style.display="none";
+  // Sembunyikan tombol kembali
+  document.getElementById("kembaliBtn").style.display = "none";
+}
+
+function tambahDataSiswa() {
+  const nisn=document.getElementById("inputNISNBaru").value.trim();
+  const nama=document.getElementById("inputNamaBaru").value.trim();
+  const mtk=parseFloat(document.getElementById("inputMTKBaru").value);
+  const ipa=parseFloat(document.getElementById("inputIPABaru").value);
+  const pai=parseFloat(document.getElementById("inputPAIBaru").value);
+  if(!nisn||!nama||isNaN(mtk)||isNaN(ipa)||isNaN(pai)||mtk<0||mtk>100||ipa<0||ipa>100||pai<0||pai>100){
+    tampilkanPesan("Semua field harus diisi dengan benar! Nilai 0-100.");return;
+  }
+  if(datasiswa.some(s=>s.nisn===nisn)){tampilkanPesan("NISN sudah ada!");return;}
+  const siswaBaru={nisn, nama, mtk, ipa, pai, rata:(mtk+ipa+pai)/3};
+  datasiswa.push(siswaBaru);
+  hitungRanking();
+  saveData();
+  tampilkanPesan("Data siswa berhasil ditambahkan!",true);
+  // Reset form
+  document.getElementById("inputNISNBaru").value="";
+  document.getElementById("inputNamaBaru").value="";
+  document.getElementById("inputMTKBaru").value="";
+  document.getElementById("inputIPABaru").value="";
+  document.getElementById("inputPAIBaru").value="";
+  hasilDicari=[siswaBaru]; tampilkanHasil();
+}
+
+function hapusDataSiswa(nisn) {
+  if(confirm("Yakin ingin hapus?")) {
+    datasiswa= datasiswa.filter(s=>s.nisn!==nisn);
+    hasilDicari=hasilDicari.filter(s=>s.nisn!==nisn);
+    hitungRanking();
+    saveData();
+    tampilkanPesan("Data siswa berhasil dihapus!",true);
+    tampilkanHasil();
+  }
+}
+
+function editInline(nisn) {
+  editingNisn = nisn;
+  tampilkanHasil();
+}
+
+function simpanEditInline(nisn) {
+  const siswa = datasiswa.find(s => s.nisn === nisn);
+  if (!siswa) return;
+  const nama = document.getElementById("editNama").value.trim();
+  const mtk = parseFloat(document.getElementById("editMtk").value);
+  const ipa = parseFloat(document.getElementById("editIpa").value);
+  const pai = parseFloat(document.getElementById("editPai").value);
+  if (!nama || isNaN(mtk) || isNaN(ipa) || isNaN(pai) || mtk < 0 || mtk > 100 || ipa < 0 || ipa > 100 || pai < 0 || pai > 100) {
+    tampilkanPesan("Semua field harus diisi dengan benar! Nilai 0-100.");
+    return;
+  }
+  siswa.nama = nama;
+  siswa.mtk = mtk;
+  siswa.ipa = ipa;
+  siswa.pai = pai;
+  siswa.rata = (mtk + ipa + pai) / 3;
+  hitungRanking();
+  saveData();
+  editingNisn = null;
+  tampilkanHasil();
+  tampilkanPesan("Data siswa berhasil diperbarui!", true);
+}
+
+function batalEdit() {
+  editingNisn = null;
+  tampilkanHasil();
+}
+</script>
+</body>
+</html>

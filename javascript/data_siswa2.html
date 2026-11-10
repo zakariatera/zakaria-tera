@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Siswa</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h2 {
+            color: #008080;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #008080;
+            color: white;
+            cursor: pointer;
+        }
+        th:hover {
+            background-color: #005959;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .highlight {
+            background-color: #ffff99 !important;
+        }
+        form {
+            margin: 20px auto;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 50%;
+        }
+        input {
+            margin: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #005959;
+        }
+        #ok {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Data Siswa</h2>
+    <p id="ok"></p>
+
+    <form id="studentForm">
+        <input type="text" id="nisn" placeholder="NISN" required>
+        <input type="text" id="nama" placeholder="Nama" required>
+        <input type="number" id="mtk" placeholder="Nilai MTK" required>
+        <input type="number" id="ipa" placeholder="Nilai IPA" required>
+        <input type="number" id="pai" placeholder="Nilai PAI" required>
+        <button type="submit">Tambah Siswa</button>
+    </form>
+
+    <input type="text" id="searchInput" placeholder="Cari berdasarkan NISN atau Nama">
+    <button id="searchButton">Cari</button>
+    <button id="deleteButton">Hapus Siswa</button>
+
+    <table id="table-datasiswa">
+        <tr>
+            <th onclick="sortTable(0)">Ranking</th>
+            <th onclick="sortTable(1)">NISN</th>
+            <th onclick="sortTable(2)">Nama</th>
+            <th onclick="sortTable(3)">MTK</th>
+            <th onclick="sortTable(4)">IPA</th>
+            <th onclick="sortTable(5)">PAI</th>
+            <th onclick="sortTable(6)">Rata-rata</th>
+        </tr>
+    </table>
+
+    <script>
+        let datasiswa = JSON.parse(localStorage.getItem('datasiswa')) || [
+            {nisn: "001", nama: "Joko Santoso", mtk: 85, ipa: 100, pai: 100},
+            {nisn: "002", nama: "Adi Jaya", mtk: 90, ipa: 95, pai: 100},
+            {nisn: "003", nama: "Basuki", mtk: 85, ipa: 12, pai: 19},
+            {nisn: "004", nama: "Randi Gutama", mtk: 85, ipa: 100, pai: 100},
+            {nisn: "005", nama: "Nurhadi", mtk: 85, ipa: 100, pai: 100},
+            {nisn: "006", nama: "Sugiri", mtk: 85, ipa: 100, pai: 100},
+        ];
+
+        function calculateAverages() {
+            datasiswa.forEach(siswa => {
+                siswa.rata = (siswa.mtk + siswa.ipa + siswa.pai) / 3;
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('datasiswa', JSON.stringify(datasiswa));
+        }
+
+        function displayData(highlightIndex = -1) {
+            const table = document.getElementById("table-datasiswa");
+            table.innerHTML = `
+                <tr>
+                    <th onclick="sortTable(0)">Ranking</th>
+                    <th onclick="sortTable(1)">NISN</th>
+                    <th onclick="sortTable(2)">Nama</th>
+                    <th onclick="sortTable(3)">MTK</th>
+                    <th onclick="sortTable(4)">IPA</th>
+                    <th onclick="sortTable(5)">PAI</th>
+                    <th onclick="sortTable(6)">Rata-rata</th>
+                </tr>
+            `;
+            datasiswa.forEach((siswa, index) => {
+                let rowClass = index === highlightIndex ? 'highlight' : '';
+                let row = `<tr class="${rowClass}">
+                    <td>${index + 1}</td>
+                    <td>${siswa.nisn}</td>
+                    <td>${siswa.nama}</td>
+                    <td>${siswa.mtk}</td>
+                    <td>${siswa.ipa}</td>
+                    <td>${siswa.pai}</td>
+                    <td>${siswa.rata.toFixed(2)}</td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+
+        document.getElementById("studentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const nisn = document.getElementById("nisn").value.trim();
+            const nama = document.getElementById("nama").value.trim();
+            const mtk = parseInt(document.getElementById("mtk").value);
+            const ipa = parseInt(document.getElementById("ipa").value);
+            const pai = parseInt(document.getElementById("pai").value);
+
+            if (!nisn || !nama || isNaN(mtk) || isNaN(ipa) || isNaN(pai)) {
+                document.getElementById("ok").innerHTML = "Harap isi semua field dengan benar.";
+                return;
+            }
+            if (mtk < 0 || mtk > 100 || ipa < 0 || ipa > 100 || pai < 0 || pai > 100) {
+                document.getElementById("ok").innerHTML = "Nilai harus antara 0 dan 100.";
+                return;
+            }
+            if (datasiswa.some(siswa => siswa.nisn === nisn)) {
+                document.getElementById("ok").innerHTML = "NISN sudah ada.";
+                return;
+            }
+
+            datasiswa.push({nisn, nama, mtk, ipa, pai});
+            calculateAverages();
+            displayData();
+            saveData();
+            document.getElementById("ok").innerHTML = "Siswa berhasil ditambahkan.";
+            this.reset();
+        });
+
+        document.getElementById("searchButton").addEventListener("click", function() {
+            const searchValue = document.getElementById("searchInput").value.toLowerCase().trim();
+            const foundIndex = datasiswa.findIndex(siswa => siswa.nisn.toLowerCase() === searchValue || siswa.nama.toLowerCase() === searchValue);
+            if (foundIndex !== -1) {
+                displayData(foundIndex);
+                document.getElementById("ok").innerHTML = "Data ditemukan dan disorot di tabel.";
+            } else {
+                document.getElementById("ok").innerHTML = "Data tidak ditemukan";
+                displayData();
+            }
+        });
+
+        document.getElementById("deleteButton").addEventListener("click", function() {
+            const nisnToDelete = prompt("Masukkan NISN siswa yang ingin dihapus:");
+            if (nisnToDelete && datasiswa.some(siswa => siswa.nisn === nisnToDelete)) {
+                if (confirm(`Apakah Anda yakin ingin menghapus siswa dengan NISN ${nisnToDelete}?`)) {
+                    datasiswa = datasiswa.filter(siswa => siswa.nisn !== nisnToDelete);
+                    calculateAverages();
+                    displayData();
+                    saveData();
+                    document.getElementById("ok").innerHTML = "Siswa berhasil dihapus.";
+                }
+            } else {
+                document.getElementById("ok").innerHTML = "NISN tidak ditemukan.";
+            }
+        });
+
+        function sortTable(columnIndex) {
+            const sortedData = [...datasiswa].sort((a, b) => {
+                if (columnIndex === 0) {
+                    return a.rata - b.rata; // Sort by average
+                } else if (columnIndex === 1) {
+                    return a.nisn.localeCompare(b.nisn); // Sort by NISN
+                } else if (columnIndex === 2) {
+                    return a.nama.localeCompare(b.nama); // Sort by name
+                } else {
+                    return a[columnIndex] - b[columnIndex]; // Sort by scores
+                }
+            });
+            datasiswa = sortedData;
+            calculateAverages();
+            displayData();
+        }
+
+        calculateAverages();
+        displayData();
+    </script>
+</body>
+</html>
